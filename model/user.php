@@ -1,8 +1,20 @@
 <?php
+/**
+ * Author: Andrew Pivovar
+ *
+ * Implementation date: 04.11.2022 22:30
+ *
+ * Date of change: 05.11.2022 15:40
+ *
+ * Content of the file is a user class.
+ */
 
 require_once 'core/db.php';
 require_once 'util/validator.php';
 
+/**
+ * Representing the users table as a user entity.
+ */
 class User
 {
     private $db;
@@ -17,7 +29,6 @@ class User
     public function __construct($args)
     {
         $this->db = DB::getInstance();
-
         $this->setId($args['id']);
 
         if (count($args) > 1) {
@@ -123,7 +134,7 @@ class User
     public function save()
     {
         $sql = "INSERT INTO users (id, name, surname, date_of_birthday, sex, city_of_birth) "
-            . "values (:id, :name, :surname, :date_of_birthday, :sex, :city_of_birth)";
+             . "values (:id, :name, :surname, :date_of_birthday, :sex, :city_of_birth)";
         $this->db->mutation($sql, $this->toArray());
         echo "{$this->getName()} is saved!\n";
     }
@@ -137,7 +148,8 @@ class User
 
     public function find($id)
     {
-        $sql = "SELECT name, surname, date_of_birthday, sex, city_of_birth FROM users WHERE id = :id";
+        $sql = "SELECT name, surname, date_of_birthday, sex, city_of_birth "
+             . "FROM users WHERE id = :id";
         return $this->db->query($sql, ['id' => $id])[0];
     }
 
@@ -155,8 +167,12 @@ class User
        switch ($type) {
         case "age":
             $this->setDateOfBirthday($this->getAge($this->getDateOfBirthday()));
+            break;
         case 'gender':
             $this->sex = $this->sexToString($this->getSex());
+            break;
+        default:
+            throw new Exception("User format type doesn't exist.");
        }
 
        return (object)(array)$this;

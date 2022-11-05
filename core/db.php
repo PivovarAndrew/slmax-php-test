@@ -1,7 +1,19 @@
 <?php
+/**
+ * Author: Andrew Pivovar
+ *
+ * Implementation date: 04.11.2022 17:15
+ *
+ * Date of change: 04.11.2022 17:15
+ *
+ * Content of the file is a database class.
+ */
 
 require_once 'config/db.php';
 
+/**
+ * Singleton class for connecting and processing requests to the database.
+ */
 class DB
 {
     private $dbh;
@@ -11,8 +23,8 @@ class DB
     {
         try {
             $dsn = 'mysql:host=' . HOST_NAME
-                . ';dbname='    . DB_NAME
-                . ';port='      . PORT;
+                 . ';dbname='    . DB_NAME
+                 . ';port='      . PORT;
         } catch (PDOException $e) {
             echo "DB Exception: " . $e->getMessage();
         }
@@ -34,6 +46,14 @@ class DB
         return self::$instance;
     }
 
+    /**
+     * Request method with optional parameter passing directed  to get database data.
+     *
+     * @param string          $sql
+     * @param array | null    $data
+     * @return array | void
+     * @throws PDOException if request failed
+     */
     public function query($sql, $data = null)
     {
         try {
@@ -58,6 +78,14 @@ class DB
         }
     }
 
+    /**
+     * Request method with parameter passing directed to get database data.
+     *
+     * @param string    $sql
+     * @param array     $data
+     * @return void
+     * @throws PDOException if request failed
+     */
     public function mutation($sql, $data)
     {
         try {

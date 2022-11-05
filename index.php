@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Author: Andrew Pivovar
+ *
+ * Implementation date: 04.11.2022 16:05
+ *
+ * Date of change: 04.11.2022 23:50
+ *
+ * Index page displaying the functionality of the test task.
+ */
+
 require 'model/user.php';
 require 'model/user_list.php';
 
