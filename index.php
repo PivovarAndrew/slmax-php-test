@@ -5,7 +5,7 @@
  *
  * Implementation date: 04.11.2022 16:05
  *
- * Date of change: 04.11.2022 23:50
+ * Date of change: 06.11.2022 01:26
  *
  * Index page displaying the functionality of the test task.
  */
@@ -34,7 +34,9 @@ try {
     print_r($user->toArray());
     print_r($user->format("age"));
     print_r($user->format("gender"));
-    $user->delete(1255);
+    $user_list = new UserList(array(1, 2, 3, 1255));
+    print_r($user_list->toArray());
+    $user_list->deleteUser(end($user_list->getUsers()));
 } catch (Exception $e) {
     echo '[Exception] ' . $e->getMessage();
 }
